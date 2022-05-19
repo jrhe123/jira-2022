@@ -1,3 +1,57 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": 1,
+      "name": "roy"
+    },
+    {
+      "id": 2,
+      "name": "jack"
+    },
+    {
+      "id": 3,
+      "name": "jira"
+    },
+    {
+      "id": 4,
+      "name": "david"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "java project",
+      "personId": 1,
+      "organization": "it team",
+      "created": 1546900800000
+    },
+    {
+      "id": 2,
+      "name": "nodejss project",
+      "personId": 3,
+      "organization": "it team",
+      "created": 1546900800001
+    },
+    {
+      "id": 3,
+      "name": "java project",
+      "personId": 4,
+      "organization": "it team",
+      "created": 1546900800002
+    },
+    {
+      "id": 4,
+      "name": "k8s project",
+      "personId": 2,
+      "organization": "devops team",
+      "created": 1546900800003
+    },
+    {
+      "id": 5,
+      "name": "flask project",
+      "personId": 2,
+      "organization": "ai team",
+      "created": 1546900800004
+    }
+  ]
 }

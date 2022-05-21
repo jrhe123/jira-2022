@@ -41,7 +41,7 @@ export const ProjectListScreen = () => {
     name: string;
   }
   type Person = { name: string }
-  
+
   const abc: Person = {
     name: "roytest"
   }
@@ -78,4 +78,24 @@ case 2: utility type
     age: 123
   }
   const hideAllInfo: Omit<Person, 'name' | 'age'> = {}
+ */
+
+/**
+ * others for utility type
+ * 
+  type Person = {
+    name: string;
+    age: number;
+  }
+
+ * 1. keyof
+ * type PersonKeys = keyof Person
+ * => 'name' | 'age'
+ * 
+ * 2. Pick
+ * type PersonOnlyName = Pick<Person, 'name'>
+ * 
+ * 3. Exclude
+ * type Age = Exclude<PersonKeys, 'name'>
+ * 
  */

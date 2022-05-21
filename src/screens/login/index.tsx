@@ -41,20 +41,7 @@ export const LoginScreen = () => {
     });
   };
 
-  const login = (param: { username: string; password: string }) => {
-    const url = `${apiUrl}/login`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(param),
-    }).then(async (response) => {
-      console.log("response: ", response);
-      if (response.ok) {
-      }
-    });
-  };
+  const login = (param: { username: string; password: string }) => {};
 
   return (
     <form onSubmit={handleSubmit}>
@@ -66,7 +53,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" />
       </div>
-      <button type="submit">login</button>
+      <button type="submit">register</button>
     </form>
   );
 };

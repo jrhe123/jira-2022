@@ -1,4 +1,5 @@
 import React, { FormEvent } from "react";
+import { useAuth } from "context/auth-context";
 
 /**
  * duck extension, unlike java object oriented, it's interface oriented
@@ -25,9 +26,9 @@ test(b)
  * they're both ok, as long as b contains "id"
  */
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 export const LoginScreen = () => {
+  const { login, user } = useAuth();
+
   // HTMLFormElement extends Element
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,10 +42,9 @@ export const LoginScreen = () => {
     });
   };
 
-  const login = (param: { username: string; password: string }) => {};
-
   return (
     <form onSubmit={handleSubmit}>
+      {user && <p>logged in: {user.name}</p>}
       <div>
         <label htmlFor="username">Username</label>
         <input type="text" id="username" />
@@ -53,7 +53,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" />
       </div>
-      <button type="submit">register</button>
+      <button type="submit">login</button>
     </form>
   );
 };

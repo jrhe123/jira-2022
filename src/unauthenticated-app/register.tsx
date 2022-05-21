@@ -26,8 +26,8 @@ test(b)
  * they're both ok, as long as b contains "id"
  */
 
-export const LoginScreen = () => {
-  const { login, user } = useAuth();
+export const RegisterScreen = () => {
+  const { register, user } = useAuth();
 
   // HTMLFormElement extends Element
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -36,7 +36,7 @@ export const LoginScreen = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({
+    register({
       username,
       password,
     });
@@ -44,7 +44,6 @@ export const LoginScreen = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {user && <p>logged in: {user.name}</p>}
       <div>
         <label htmlFor="username">Username</label>
         <input type="text" id="username" />
@@ -53,7 +52,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" />
       </div>
-      <button type="submit">login</button>
+      <button type="submit">register</button>
     </form>
   );
 };

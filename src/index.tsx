@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { loadDevTools } from "jira-dev-tool";
 import { AppProviders } from "context";
+
+import "./index.css";
+import "antd/dist/antd.less";
 
 loadDevTools(() => {
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

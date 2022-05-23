@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
+import styled from "@emotion/styled";
 
 /**
  * duck extension, unlike java object oriented, it's interface oriented
@@ -61,10 +62,14 @@ export const RegisterScreen = () => {
         <Input type="password" id="password" placeholder="password" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <FullWidthButton type="primary" htmlType="submit">
           register
-        </Button>
+        </FullWidthButton>
       </Form.Item>
     </Form>
   );
 };
+
+const FullWidthButton = styled(Button)`
+  width: 100%;
+`;

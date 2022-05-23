@@ -1,0 +1,13 @@
+html {
+  /*
+  1. rem is relative to root element
+  2. em is relative to parent element
+  browser: 16px * 0.625 = 10px
+  -> 1rem === 10px
+  */
+  font-size: 62.5%;
+}
+
+html body #root .App {
+  min-height: 100vh;
+}

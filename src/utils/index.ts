@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
@@ -65,11 +65,33 @@ export const useArray = <T>(initialArray: T[]) => {
   };
 };
 
+// version 1
+// export const useDocumentTitle = (
+//   title: string,
+//   keepOnUnmount: boolean = true
+// ) => {
+//   // closure: the old title is not changed
+//   const oldTitle = document.title;
+//   useEffect(() => {
+//     document.title = title;
+//   }, [title]);
+
+//   useEffect(() => {
+//     return () => {
+//       if (!keepOnUnmount) {
+//         document.title = oldTitle;
+//       }
+//     };
+//   }, []); // <- js closure, no deps
+// };
+
+// version 2
 export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
 ) => {
-  const oldTitle = document.title;
+  // useRef: ref current value is not changed during life circle
+  const oldTitle = useRef(document.title).current;
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -80,5 +102,5 @@ export const useDocumentTitle = (
         document.title = oldTitle;
       }
     };
-  }, []);
+  }, [oldTitle, keepOnUnmount]);
 };

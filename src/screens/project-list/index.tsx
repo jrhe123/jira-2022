@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { cleanObject, useMount, useDebounce } from "utils";
+import { cleanObject, useMount, useDebounce, useDocumentTitle } from "utils";
 import { useHttp } from "utils/http";
 
 import { List, Project } from "./list";
@@ -18,6 +18,8 @@ export const ProjectListScreen = () => {
   const debouncedParam = useDebounce(param, 2000);
   const { isLoading, error, data: list } = useProjects(debouncedParam);
   const { data: users } = useUsers();
+
+  useDocumentTitle("Project list", false);
 
   return (
     <Container>

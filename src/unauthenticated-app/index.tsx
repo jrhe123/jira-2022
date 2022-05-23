@@ -6,10 +6,14 @@ import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.png";
 import right from "assets/right.png";
+import { useDocumentTitle } from "utils";
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  useDocumentTitle("Signin or signup", false);
+
   return (
     <Container>
       <Background />

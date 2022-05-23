@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
 import styled from "@emotion/styled";
+import { useAsync } from "utils/use-async";
 
 /**
  * duck extension, unlike java object oriented, it's interface oriented
@@ -28,8 +29,13 @@ test(b)
  * they're both ok, as long as b contains "id"
  */
 
-export const LoginScreen = () => {
+export const LoginScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { login, user } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   // HTMLFormElement extends Element
   // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -43,8 +49,14 @@ export const LoginScreen = () => {
   //     password,
   //   });
   // };
-  const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    await run(login(values)).catch((error) => {
+      console.log("error: ", error);
+      onError(error);
+    });
   };
 
   return (
@@ -62,7 +74,7 @@ export const LoginScreen = () => {
         <Input type="password" id="password" placeholder="password" />
       </Form.Item>
       <Form.Item>
-        <FullWidthButton type="primary" htmlType="submit">
+        <FullWidthButton loading={isLoading} type="primary" htmlType="submit">
           login
         </FullWidthButton>
       </Form.Item>

@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
 import styled from "@emotion/styled";
+import { useAsync } from "utils/use-async";
 
 /**
  * duck extension, unlike java object oriented, it's interface oriented
@@ -28,8 +29,13 @@ test(b)
  * they're both ok, as long as b contains "id"
  */
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { register, user } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   // HTMLFormElement extends Element
   // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -43,8 +49,19 @@ export const RegisterScreen = () => {
   //     password,
   //   });
   // };
-  const handleSubmit = (values: { username: string; password: string }) => {
-    register(values);
+  const handleSubmit = async ({
+    cpassword,
+    ...values
+  }: {
+    username: string;
+    password: string;
+    cpassword: string;
+  }) => {
+    if (cpassword !== values.password) {
+      onError(new Error("Password do not matched"));
+      return;
+    }
+    await run(register(values)).catch(onError);
   };
 
   return (
@@ -61,8 +78,14 @@ export const RegisterScreen = () => {
       >
         <Input type="password" id="password" placeholder="password" />
       </Form.Item>
+      <Form.Item
+        name={"cpassword"}
+        rules={[{ required: true, message: "cpassword is required" }]}
+      >
+        <Input type="password" id="cpassword" placeholder="confirm password" />
+      </Form.Item>
       <Form.Item>
-        <FullWidthButton type="primary" htmlType="submit">
+        <FullWidthButton loading={isLoading} type="primary" htmlType="submit">
           register
         </FullWidthButton>
       </Form.Item>

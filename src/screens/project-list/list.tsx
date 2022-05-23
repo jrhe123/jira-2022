@@ -1,6 +1,7 @@
 import React from "react";
 import { User } from "screens/project-list/search-panel";
 import { Table } from "antd";
+import dayjs from "dayjs";
 
 export interface Project {
   id: string;
@@ -8,6 +9,7 @@ export interface Project {
   personId: string;
   pin: boolean;
   organization: string;
+  created: number;
 }
 
 export interface ListProps {
@@ -27,12 +29,28 @@ export const List = ({ list, users }: ListProps) => {
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
+          title: "department",
+          dataIndex: "organization",
+        },
+        {
           title: "manager",
           render(value, project) {
             return (
               <span key={project.personId}>
                 {users.find((user) => user.id === project.personId)?.name ||
                   "unknown"}
+              </span>
+            );
+          },
+        },
+        {
+          title: "created",
+          render(value, project) {
+            return (
+              <span key={project.personId}>
+                {project.created
+                  ? dayjs(project.created).format("YYYY-MM-DD")
+                  : "N/A"}
               </span>
             );
           },

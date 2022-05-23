@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoginScreen } from "unauthenticated-app/login";
 import { RegisterScreen } from "unauthenticated-app/register";
-import { Card, Divider } from "antd";
+import { Card, Divider, Button } from "antd";
 import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.png";
@@ -18,7 +18,7 @@ export const UnauthenticatedApp = () => {
         <Title>{isRegister ? "Signup" : "Signin"}</Title>
         {isRegister ? <RegisterScreen /> : <LoginScreen />}
         <Divider />
-        <HighLight onClick={() => setIsRegister(!isRegister)}>
+        <HighLight type="link" onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "Already have an account" : "Sign up with email"}
         </HighLight>
       </ShadowCard>
@@ -26,8 +26,7 @@ export const UnauthenticatedApp = () => {
   );
 };
 
-const HighLight = styled.a`
-  text-decoration: underline;
+const HighLight = styled(Button)`
   font-size: 1.2rem;
 `;
 

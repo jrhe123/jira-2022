@@ -18,13 +18,18 @@ export const UnauthenticatedApp = () => {
         <Title>{isRegister ? "Signup" : "Signin"}</Title>
         {isRegister ? <RegisterScreen /> : <LoginScreen />}
         <Divider />
-        <a onClick={() => setIsRegister(!isRegister)}>
+        <HighLight onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "Already have an account" : "Sign up with email"}
-        </a>
+        </HighLight>
       </ShadowCard>
     </Container>
   );
 };
+
+const HighLight = styled.a`
+  text-decoration: underline;
+  font-size: 1.2rem;
+`;
 
 const Title = styled.h3`
   margin-bottom: 2.4rem;

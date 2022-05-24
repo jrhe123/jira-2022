@@ -8,6 +8,7 @@ import { Dropdown, Menu, Button } from "antd";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
+import { resetRoute } from "utils";
 
 export const AuthenticatedApp = () => {
   return (
@@ -19,6 +20,7 @@ export const AuthenticatedApp = () => {
           <Routes>
             <Route path="/projects" element={<ProjectListScreen />} />
             <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
+            <Route path="*" element={<Navigate to={"/projects"} />} />
           </Routes>
         </Router>
       </Main>
@@ -33,7 +35,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Logo width={"10rem"} />
+        <Button type="link" onClick={resetRoute}>
+          <Logo height={"3rem"} width={"10rem"} />
+        </Button>
         <h3>project</h3>
         <h3>user</h3>
       </HeaderLeft>

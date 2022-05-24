@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
+import { cleanObject } from "utils";
 
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +15,13 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [searchParams]
     ),
-    setSearchParams,
+    (params: Partial<{ [key in K]: unknown }>) => {
+      const o = cleanObject({
+        ...Object.fromEntries(searchParams),
+        ...params,
+      }) as URLSearchParamsInit;
+      return setSearchParams(o);
+    },
   ] as const;
 };
 /**
@@ -23,4 +30,15 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
  * 2. state variable
  *
  * 3. object (x) -> will cause infinite loop render issue
+ */
+
+/**
+ * iterator:
+ * []
+ * {}
+ * Map
+ * -> can use for...of
+ * -> check: myVar[Symbol.iterator]
+ *
+ * https://codesandbox.io/s/upbeat-wood-bum3j?file=/src/index.js
  */

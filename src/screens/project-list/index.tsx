@@ -12,11 +12,7 @@ import { Typography } from "antd";
 import { useUrlQueryParam } from "utils/url";
 
 export const ProjectListScreen = () => {
-  const [, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  const [param] = useUrlQueryParam(["name", "personId"]);
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
   const debouncedParam = useDebounce(param, 2000);
   const { isLoading, error, data: list } = useProjects(debouncedParam);
   const { data: users } = useUsers();

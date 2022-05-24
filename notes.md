@@ -15,3 +15,7 @@ commitlint:
 
 exampe:
 git commit -m "fix: this is my message"
+
+\*\* define key-value object:
+
+object: { [key: string]: unknown }

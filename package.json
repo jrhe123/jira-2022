@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=7",
     "json-server": "^0.17.0",

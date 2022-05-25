@@ -8,14 +8,14 @@ import { SearchPanel } from "./search-panel";
 import styled from "@emotion/styled";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectsSearchParams } from "./util";
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useProjectsSearchParams();
   const debouncedParam = useDebounce(param, 2000);
-  const { isLoading, error, data: list } = useProjects(debouncedParam);
+  const { isLoading, error, data: list, retry } = useProjects(debouncedParam);
   const { data: users } = useUsers();
 
   useDocumentTitle("Project list", false);
@@ -23,11 +23,17 @@ export const ProjectListScreen = () => {
   return (
     <Container>
       <h3>Project List</h3>
+      {/* <Button onClick={retry}>test retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type="danger">{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} dataSource={list || []} users={users || []} />
+      <List
+        refresh={retry}
+        loading={isLoading}
+        dataSource={list || []}
+        users={users || []}
+      />
     </Container>
   );
 };

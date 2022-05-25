@@ -25,6 +25,9 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+  // if use useState to store func, we need one more ()
+  // lazyload: auto call in the first load
+  const [retry, setRetry] = useState(() => () => {});
 
   const setData = (data: D) =>
     setState({
@@ -40,10 +43,19 @@ export const useAsync = <D>(
       error,
     });
 
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("Promise is required in useAsync");
     }
+    // store current promise for later retry
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig);
+      }
+    });
     setState({
       ...state,
       stat: "loading",
@@ -68,6 +80,7 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    retry,
     ...state,
   };
 };

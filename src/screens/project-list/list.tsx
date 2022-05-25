@@ -17,9 +17,10 @@ export interface Project {
 
 export interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
-export const List = ({ users, ...props }: ListProps) => {
+export const List = ({ users, refresh, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // atom func
   // v1
@@ -28,7 +29,7 @@ export const List = ({ users, ...props }: ListProps) => {
   // }
   // v2
   const handlePinProject = (id: number) => (pin: boolean) => {
-    mutate({ id, pin });
+    mutate({ id, pin }).then(refresh);
   };
   return (
     <Table

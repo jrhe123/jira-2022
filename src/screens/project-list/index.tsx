@@ -10,9 +10,10 @@ import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { Typography } from "antd";
 import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+  const [param, setParam] = useProjectsSearchParams();
   const debouncedParam = useDebounce(param, 2000);
   const { isLoading, error, data: list } = useProjects(debouncedParam);
   const { data: users } = useUsers();

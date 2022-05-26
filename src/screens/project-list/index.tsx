@@ -11,8 +11,11 @@ import { useUsers } from "utils/user";
 import { Button, Typography } from "antd";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectsSearchParams } from "./util";
+import { Row } from "components/lib";
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props: {
+  setProjectModalOpen: (isOpen: boolean) => void;
+}) => {
   const [param, setParam] = useProjectsSearchParams();
   const debouncedParam = useDebounce(param, 2000);
   const { isLoading, error, data: list, retry } = useProjects(debouncedParam);
@@ -22,13 +25,19 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
-      <h3>Project List</h3>
+      <Row between={true}>
+        <h3>Project List</h3>
+        <Button onClick={() => props.setProjectModalOpen(true)}>
+          Create project
+        </Button>
+      </Row>
       {/* <Button onClick={retry}>test retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {error ? (
         <Typography.Text type="danger">{error.message}</Typography.Text>
       ) : null}
       <List
+        setProjectModalOpen={props.setProjectModalOpen}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}

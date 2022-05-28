@@ -17,43 +17,33 @@ export const AuthenticatedApp = () => {
 
   return (
     <Container>
-      <PageHeader setProjectModalOpen={setProjectModalOpen} />
-      {/* <Nav>nav</Nav> */}
-      {/* <Button onClick={() => setProjectModalOpen(true)}>open modal</Button> */}
-      <Main>
-        <Router>
+      <Router>
+        <PageHeader />
+        {/* <Nav>nav</Nav> */}
+        {/* <Button onClick={() => setProjectModalOpen(true)}>open modal</Button> */}
+        <Main>
           <Routes>
-            <Route
-              path="/projects"
-              element={
-                <ProjectListScreen setProjectModalOpen={setProjectModalOpen} />
-              }
-            />
+            <Route path="/projects" element={<ProjectListScreen />} />
             <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
             <Route path="*" element={<Navigate to={"/projects"} />} />
           </Routes>
-        </Router>
-      </Main>
-      {/* <Aside>aside</Aside> */}
-      {/* <Footer>footer</Footer> */}
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
+        </Main>
+        {/* <Aside>aside</Aside> */}
+        {/* <Footer>footer</Footer> */}
+        <ProjectModal />
+      </Router>
     </Container>
   );
 };
 
-const PageHeader = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
         <ButtonNoPadding type="link" onClick={resetRoute}>
           <Logo height={"3rem"} width={"10rem"} />
         </ButtonNoPadding>
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <ProjectPopover />
         <span>user</span>
       </HeaderLeft>
       <HeaderRight>

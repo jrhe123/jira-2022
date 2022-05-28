@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
+import { useProjectModal } from "./util";
 
 export interface Project {
   id: number;
@@ -19,11 +20,11 @@ export interface Project {
 export interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  setProjectModalOpen: (isOpen: boolean) => void;
 }
 
 export const List = ({ users, refresh, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const { open } = useProjectModal();
   // atom func
   // v1
   // const handlePinProject = (id: number, pin: boolean) => {
@@ -91,10 +92,7 @@ export const List = ({ users, refresh, ...props }: ListProps) => {
                 overlay={
                   <Menu>
                     <Menu.Item key={"edit"}>
-                      <ButtonNoPadding
-                        type="link"
-                        onClick={() => props.setProjectModalOpen(true)}
-                      >
+                      <ButtonNoPadding type="link" onClick={open}>
                         edit
                       </ButtonNoPadding>
                     </Menu.Item>

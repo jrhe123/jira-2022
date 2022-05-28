@@ -11,13 +11,18 @@ import { useUsers } from "utils/user";
 import { Button, Typography } from "antd";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { Row } from "components/lib";
+import { ErrorBox, Row } from "components/lib";
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useProjectsSearchParams();
   const { open } = useProjectModal();
   const debouncedParam = useDebounce(param, 2000);
-  const { isLoading, error, data: list, retry } = useProjects(debouncedParam);
+  const {
+    isLoading,
+    error,
+    data: list,
+    // retry
+  } = useProjects(debouncedParam);
   const { data: users } = useUsers();
 
   useDocumentTitle("Project list", false);
@@ -30,11 +35,9 @@ export const ProjectListScreen = () => {
       </Row>
       {/* <Button onClick={retry}>test retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
-      {error ? (
-        <Typography.Text type="danger">{error.message}</Typography.Text>
-      ) : null}
+      {error ? <ErrorBox error={error} /> : null}
       <List
-        refresh={retry}
+        // refresh={retry}
         loading={isLoading}
         dataSource={list || []}
         users={users || []}

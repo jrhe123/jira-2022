@@ -24,7 +24,7 @@ export interface ListProps extends TableProps<Project> {
 
 export const List = ({ users, refresh, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-  const { open } = useProjectModal();
+  const { startEdit } = useProjectModal();
   // atom func
   // v1
   // const handlePinProject = (id: number, pin: boolean) => {
@@ -32,8 +32,14 @@ export const List = ({ users, refresh, ...props }: ListProps) => {
   // }
   // v2
   const handlePinProject = (id: number) => (pin: boolean) => {
-    mutate({ id, pin }).then(refresh);
+    mutate({ id, pin });
+    // .then(refresh);
   };
+
+  const handleEditProject = (id: number) => () => {
+    startEdit(id);
+  };
+
   return (
     <Table
       pagination={false}
@@ -92,8 +98,16 @@ export const List = ({ users, refresh, ...props }: ListProps) => {
                 overlay={
                   <Menu>
                     <Menu.Item key={"edit"}>
-                      <ButtonNoPadding type="link" onClick={open}>
+                      <ButtonNoPadding
+                        type="link"
+                        onClick={handleEditProject(project.id)}
+                      >
                         edit
+                      </ButtonNoPadding>
+                    </Menu.Item>
+                    <Menu.Item key={"delete"}>
+                      <ButtonNoPadding type="link" onClick={() => {}}>
+                        delete
                       </ButtonNoPadding>
                     </Menu.Item>
                   </Menu>

@@ -12,10 +12,11 @@ import { Button, Typography } from "antd";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectsSearchParams } from "./util";
 import { Row } from "components/lib";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "screens/project-list/project-list.slice";
 
-export const ProjectListScreen = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectListScreen = () => {
+  const dispatch = useDispatch();
   const [param, setParam] = useProjectsSearchParams();
   const debouncedParam = useDebounce(param, 2000);
   const { isLoading, error, data: list, retry } = useProjects(debouncedParam);
@@ -27,7 +28,11 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true}>
         <h3>Project List</h3>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
+        <Button
+          onClick={() => {
+            dispatch(projectListActions.openProjectModal());
+          }}
+        >
           Create project
         </Button>
       </Row>
@@ -37,7 +42,6 @@ export const ProjectListScreen = (props: {
         <Typography.Text type="danger">{error.message}</Typography.Text>
       ) : null}
       <List
-        setProjectModalOpen={props.setProjectModalOpen}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}

@@ -3,6 +3,7 @@ import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
 import styled from "@emotion/styled";
 import { useAsync } from "utils/use-async";
+import { useDispatch } from "react-redux";
 
 /**
  * duck extension, unlike java object oriented, it's interface oriented
@@ -36,6 +37,7 @@ export const LoginScreen = ({
 }) => {
   const { login, user } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  const dispatch = useDispatch();
 
   // HTMLFormElement extends Element
   // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

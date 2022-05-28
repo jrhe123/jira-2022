@@ -13,9 +13,12 @@ commitlint:
 'test'
 ];
 
-exampe:
+example:
 git commit -m "fix: this is my message"
 
 \*\* define key-value object:
 
 object: { [key: string]: unknown }
+
+redux thunk:
+https://github.com/reduxjs/redux-toolkit/issues/587

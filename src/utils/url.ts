@@ -2,9 +2,20 @@ import { useMemo } from "react";
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 import { cleanObject } from "utils";
 
-export const useUrlQueryParam = <K extends string>(keys: K[]) => {
+export const useSetUrlSearchParam = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  return (params: { [key in string]: unknown }) => {
+    const o = cleanObject({
+      ...Object.fromEntries(searchParams),
+      ...params,
+    }) as URLSearchParamsInit;
+    return setSearchParams(o);
+  };
+};
 
+export const useUrlQueryParam = <K extends string>(keys: K[]) => {
+  const [searchParams] = useSearchParams();
+  const setSearchParams = useSetUrlSearchParam();
   return [
     useMemo(
       // <- prevent param object keep changing addr
@@ -16,11 +27,7 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
       [searchParams]
     ),
     (params: Partial<{ [key in K]: unknown }>) => {
-      const o = cleanObject({
-        ...Object.fromEntries(searchParams),
-        ...params,
-      }) as URLSearchParamsInit;
-      return setSearchParams(o);
+      return setSearchParams(params);
     },
   ] as const;
 };

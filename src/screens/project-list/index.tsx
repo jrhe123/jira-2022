@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { cleanObject, useMount, useDebounce, useDocumentTitle } from "utils";
 import { useHttp } from "utils/http";
 
-import { List, Project } from "./list";
+import { List } from "./list";
+import { Project } from "types/project";
 import { SearchPanel } from "./search-panel";
 import styled from "@emotion/styled";
 import { useProjects } from "utils/project";

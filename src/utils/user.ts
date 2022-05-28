@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { User } from "screens/project-list/search-panel";
+import { User } from "types/user";
 
 import { cleanObject } from "utils/index";
 import { useHttp } from "./http";

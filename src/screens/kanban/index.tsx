@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import { Spin } from "antd";
+import { Drag, Drop, DropChild } from "components/drag-and-drop";
 import { ScreenContainer } from "components/lib";
 import React from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useDocumentTitle } from "utils";
 import { useKanbans } from "utils/kanban";
 import { useTasks } from "utils/task";
@@ -26,26 +28,36 @@ export const KanbanScreen = () => {
   const isLoading = kanbanIsLoading || taskIsLoading;
 
   return (
-    <ScreenContainer>
-      <h1>{currentProject?.name}</h1>
-      <SearchPanel />
-      {isLoading ? (
-        <Spin size="large" />
-      ) : (
-        <ColumnsContainer>
-          {kanbans?.map((kanban) => (
-            <KanbanColumn key={kanban.id} kanban={kanban} />
-          ))}
-          <CreateKanban />
-        </ColumnsContainer>
-      )}
-      <TaskModal />
-    </ScreenContainer>
+    <DragDropContext onDragEnd={() => {}}>
+      <ScreenContainer>
+        <h1>{currentProject?.name}</h1>
+        <SearchPanel />
+        {isLoading ? (
+          <Spin size="large" />
+        ) : (
+          <Drop type="COLUMN" direction="horizontal" droppableId="kanban">
+            <ColumnsContainer>
+              {kanbans?.map((kanban, index) => (
+                <Drag
+                  key={kanban.id}
+                  index={index}
+                  draggableId={"kanban" + kanban.id}
+                >
+                  <KanbanColumn key={kanban.id} kanban={kanban} />
+                </Drag>
+              ))}
+              <CreateKanban />
+            </ColumnsContainer>
+          </Drop>
+        )}
+        <TaskModal />
+      </ScreenContainer>
+    </DragDropContext>
   );
 };
 
-export const ColumnsContainer = styled.div`
+export const ColumnsContainer = styled(DropChild)`
   display: flex;
-  overflow-x: scroll;
+  overflow: hidden;
   flex: 1;
 `;

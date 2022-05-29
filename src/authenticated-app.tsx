@@ -104,6 +104,8 @@ const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``;
 const Main = styled.main`
   grid-area: main;
+  display: flex;
+  overflow: hidden;
 `;
 // const Nav = styled.nav`
 //   grid-area: nav;

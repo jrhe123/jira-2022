@@ -1,9 +1,9 @@
-import { Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { TaskTypeSelect } from "components/task-type-select";
 import { UserSelect } from "components/user-select";
 import React, { useEffect } from "react";
-import { useEditTask } from "utils/task";
+import { useDeleteTask, useEditTask } from "utils/task";
 import { useTasksModal, useTasksQueryKey } from "./util";
 
 const layout = {
@@ -17,6 +17,7 @@ export const TaskModal = () => {
   const { mutateAsync: editTask, isLoading: editLoading } = useEditTask(
     useTasksQueryKey()
   );
+  const { mutateAsync: deleteTask } = useDeleteTask(useTasksQueryKey());
 
   const onCancel = () => {
     close();
@@ -29,6 +30,18 @@ export const TaskModal = () => {
       ...form.getFieldsValue(),
     });
     close();
+  };
+
+  const startDelete = () => {
+    close();
+    Modal.confirm({
+      okText: "confirm",
+      cancelText: "cancel",
+      title: "confirm to delete task",
+      onOk() {
+        return deleteTask({ id: Number(editingTaskId) });
+      },
+    });
   };
 
   useEffect(() => {
@@ -61,6 +74,11 @@ export const TaskModal = () => {
           <TaskTypeSelect defaultOptionName="task type" />
         </Form.Item>
       </Form>
+      <div style={{ textAlign: "right" }}>
+        <Button size="small" onClick={startDelete}>
+          delete
+        </Button>
+      </div>
     </Modal>
   );
 };

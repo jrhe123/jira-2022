@@ -11,6 +11,7 @@ import { ProjectScreen } from "screens/project";
 import { resetRoute } from "utils";
 import { ProjectModal } from "screens/project-list/project-modal";
 import { ProjectPopover } from "components/project-popover";
+import { UserPopover } from "components/user-popover";
 
 export const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
@@ -47,7 +48,7 @@ const PageHeader = () => {
           <Logo height={"3rem"} width={"10rem"} />
         </ButtonNoPadding>
         <ProjectPopover />
-        <span>user</span>
+        <UserPopover />
       </HeaderLeft>
       <HeaderRight>
         <User />
